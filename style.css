@@ -3,19 +3,46 @@ body {
     justify-content: center;
 }
 
-#content {
+#board {
     display: flex;
     justify-content: center;
     width: 75%;
+    flex-wrap: wrap;
+    gap: 1em;
 }
 
 .card{
     width: 6.35cm;
     height: 8.89cm;
+    background: url(images/cardBack.jpg);
+    background-size: cover;
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 2px 2px 5px;
 }
 
-#forest{
-    background: url(images/forest.png) no-repeat;
-    background-color: black;
-    /* background: url(images/forest.png) no-repeat; */
+.forest{
+    background: url(images/forest.png);
+    background-size: cover;
 }
+
+.island {
+    background: url(images/island.png) no-repeat;
+    background-size: cover;
+}
+
+.plains {
+    background: url(images/plains.png) no-repeat;
+    background-size: cover;
+}
+
+.swamp {
+    background: url(images/swamp.png) no-repeat;
+    background-size: cover;
+}
+
+.mountain {
+    background: url(images/mountain.png) no-repeat;
+    background-size: cover;
+}
+
