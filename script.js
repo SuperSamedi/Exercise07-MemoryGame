@@ -1,20 +1,57 @@
-const boardHTML = document.getElementById("board");
-const sets = ["plains", "island", "swamp", "mountain", "forest"];
-const cardsPerSet = 2;
-
-//Populate board
-for (let i = 0; i < sets.length; i++) {
-    for (let j = 0; j < cardsPerSet; j++) {
-        const newCard = document.createElement("input");
-        newCard.type = "button";
-        newCard.classList.add("card");
-        newCard.classList.add(sets[i])
-        newCard.value = "";
-        newCard.addEventListener("click", onCardClick);
-        boardHTML.appendChild(newCard);
+class Card {
+    constructor(cardType) {
+        this.cardType = cardType;
     }
 }
 
-function onCardClick(){
+const boardHTML = document.getElementById("board");
+const cardTypes = ["plains", "island", "swamp", "mountain", "forest"];
+const cardsPerType = 2;
+let cards = [];
 
+
+cards = generateCards();
+shuffle(cards);
+setupBoard();
+
+
+function onCardClick() {
+
+}
+
+function generateCards() {
+    const cardArray = [];
+    for (let i = 0; i < cardTypes.length; i++) {
+        for (let j = 0; j < cardsPerType; j++) {
+            const newCard = new Card(cardTypes[i]);
+            cardArray.push(newCard);
+        }
+    }
+    return cardArray;
+}
+
+function shuffle(array) {
+    let currentIndex = array.length;
+    let randomIndex;
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+        // Pick a remaining element.
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+    return array;
+}
+
+function setupBoard(){
+    for (const card of cards) {
+        const newCardHTML = document.createElement("input");
+        newCardHTML.type = "button";
+        newCardHTML.classList.add("card");
+        newCardHTML.classList.add(card.cardType);
+        newCardHTML.addEventListener("click", onCardClick);
+        boardHTML.appendChild(newCardHTML);
+    }
 }
