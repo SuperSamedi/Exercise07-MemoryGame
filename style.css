@@ -11,7 +11,7 @@ body {
     gap: 1em;
 }
 
-.card{
+.card {
     width: 6.35cm;
     height: 8.89cm;
     background: url(images/cardBack.jpg);
@@ -19,29 +19,31 @@ body {
     border: none;
     border-radius: 1rem;
     box-shadow: 2px 2px 5px;
+    color:rgba(255, 255, 255, 0);
 }
 
-.forest{
+
+.forest[value="up"] {
     background: url(images/forest.png);
     background-size: cover;
 }
 
-.island {
+.island[value="up"] {
     background: url(images/island.png) no-repeat;
     background-size: cover;
 }
 
-.plains {
+.plains[value="up"] {
     background: url(images/plains.png) no-repeat;
     background-size: cover;
 }
 
-.swamp {
+.swamp[value="up"] {
     background: url(images/swamp.png) no-repeat;
     background-size: cover;
 }
 
-.mountain {
+.mountain[value="up"] {
     background: url(images/mountain.png) no-repeat;
     background-size: cover;
 }

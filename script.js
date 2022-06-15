@@ -8,6 +8,7 @@ const boardHTML = document.getElementById("board");
 const cardTypes = ["plains", "island", "swamp", "mountain", "forest"];
 const cardsPerType = 2;
 let cards = [];
+let won = false;
 
 
 cards = generateCards();
@@ -16,7 +17,11 @@ setupBoard();
 
 
 function onCardClick() {
+    if(this.value === "up" || won){
+        return;
+    }
 
+    this.value = "up";
 }
 
 function generateCards() {
@@ -51,6 +56,7 @@ function setupBoard(){
         newCardHTML.type = "button";
         newCardHTML.classList.add("card");
         newCardHTML.classList.add(card.cardType);
+        newCardHTML.value = "down";
         newCardHTML.addEventListener("click", onCardClick);
         boardHTML.appendChild(newCardHTML);
     }
