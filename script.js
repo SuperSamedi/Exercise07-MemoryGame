@@ -5,24 +5,81 @@ class Card {
 }
 
 const boardHTML = document.getElementById("board");
+const victoryHTML = document.getElementById("victory");
 const cardTypes = ["plains", "island", "swamp", "mountain", "forest"];
 const cardsPerType = 2;
 let cards = [];
-let won = false;
+let numberOfClicks = 0;
+let cardsToCheck = [];
+let resetCardsToCheck = false;
 
 
 cards = generateCards();
 shuffle(cards);
 setupBoard();
 
+const allCards = document.querySelectorAll(".card");
+
 
 function onCardClick() {
-    if(this.value === "up" || won){
+    if(this.value === "up" || numberOfClicks >= cardsPerType){
         return;
     }
 
+    numberOfClicks++;
     this.value = "up";
+    cardsToCheck.push(this);
+    if (cardsToCheck.length > 1) {
+        verifyMatch();
+    }
+ 
 }
+
+function verifyMatch(){
+    const typeOfFirstCard = cardsToCheck[0].classList.value;
+    for (let i = 0; i < cardsToCheck.length; i++) {
+        if (cardsToCheck[i].classList.value != typeOfFirstCard) {
+            // Reset if one of the cards turned up does not match the first one turned up.
+            setTimeout(turnBack, 1000);
+            return;
+        }
+    }
+    // If they all match we mark them as found.
+    if (cardsToCheck.length === cardsPerType) {
+        markAsFound();
+    }
+}
+
+function turnBack(){
+    for (const card of cardsToCheck) {
+        card.value = "down";
+    }
+    cardsToCheck = [];
+    numberOfClicks = 0;
+}
+
+function markAsFound() {
+    for (const card of cardsToCheck) {
+        card.classList.add("found");
+    }
+    cardsToCheck = [];
+    numberOfClicks = 0;
+    checkVictory();
+}
+
+function checkVictory(){
+    console.log(allCards)
+    for (const card of allCards) {
+        // console.log("Checking card: " + card)
+        if (!card.classList.contains("found")) {
+            console.log("card was not yet found.")
+            return;
+        }
+    }
+    victoryHTML.className = "won";
+}
+
+
 
 function generateCards() {
     const cardArray = [];
