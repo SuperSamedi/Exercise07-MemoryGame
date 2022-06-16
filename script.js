@@ -18,21 +18,22 @@ cards = generateCards();
 shuffle(cards);
 setupBoard();
 
-const allCards = document.querySelectorAll(".card");
+const allCardsHTML = document.querySelectorAll(".card");
 
 
 function onCardClick() {
+    // If already up or we reached the number of clicks maximum we cancel the function.
     if(this.value === "up" || numberOfClicks >= cardsPerType){
         return;
     }
-
+    //Otherwise we turn the card face up, add it to the cards to evaluate the match.
     numberOfClicks++;
     this.value = "up";
     cardsToCheck.push(this);
+    //If we turned at least 2 cards face up, we check if they match.
     if (cardsToCheck.length > 1) {
         verifyMatch();
     }
- 
 }
 
 function verifyMatch(){
@@ -42,7 +43,7 @@ function verifyMatch(){
         //If at least one of the cards turned up does not match the type of the first one,
         //we turned back the cards face down after a small timer.
         if (cardsToCheck[i].classList.value != typeOfFirstCard) {
-            setTimeout(turnBack, 1000);
+            setTimeout(turnBack, 750);
             return;
         }
     }
@@ -72,7 +73,7 @@ function markAsFound() {
 }
 
 function checkVictory(){
-    for (const card of allCards) {
+    for (const card of allCardsHTML) {
         // If at least one of the card was not marked as found, we stop checking.
         if (!card.classList.contains("found")) {
             return;
@@ -82,6 +83,7 @@ function checkVictory(){
     victoryHTML.className = "won";
 }
 
+//For each card type we generate as many cards as needed by the difficulty level (cardsPerType)
 function generateCards() {
     const cardArray = [];
     for (let i = 0; i < cardTypes.length; i++) {
@@ -93,6 +95,7 @@ function generateCards() {
     return cardArray;
 }
 
+//We generate html buttons for each generated cards.
 function setupBoard(){
     for (const card of cards) {
         const newCardHTML = document.createElement("input");
