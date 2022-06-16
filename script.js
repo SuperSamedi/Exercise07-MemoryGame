@@ -36,10 +36,12 @@ function onCardClick() {
 }
 
 function verifyMatch(){
+    //We take the first card turned up and we store it's type.
     const typeOfFirstCard = cardsToCheck[0].classList.value;
     for (let i = 0; i < cardsToCheck.length; i++) {
+        //If at least one of the cards turned up does not match the type of the first one,
+        //we turned back the cards face down after a small timer.
         if (cardsToCheck[i].classList.value != typeOfFirstCard) {
-            // Reset if one of the cards turned up does not match the first one turned up.
             setTimeout(turnBack, 1000);
             return;
         }
@@ -54,6 +56,7 @@ function turnBack(){
     for (const card of cardsToCheck) {
         card.value = "down";
     }
+    //Reset
     cardsToCheck = [];
     numberOfClicks = 0;
 }
@@ -62,24 +65,22 @@ function markAsFound() {
     for (const card of cardsToCheck) {
         card.classList.add("found");
     }
+    // Reset
     cardsToCheck = [];
     numberOfClicks = 0;
     checkVictory();
 }
 
 function checkVictory(){
-    console.log(allCards)
     for (const card of allCards) {
-        // console.log("Checking card: " + card)
+        // If at least one of the card was not marked as found, we stop checking.
         if (!card.classList.contains("found")) {
-            console.log("card was not yet found.")
             return;
         }
     }
+    // If we get here, it means all cards were marked as found.
     victoryHTML.className = "won";
 }
-
-
 
 function generateCards() {
     const cardArray = [];
@@ -90,6 +91,18 @@ function generateCards() {
         }
     }
     return cardArray;
+}
+
+function setupBoard(){
+    for (const card of cards) {
+        const newCardHTML = document.createElement("input");
+        newCardHTML.type = "button";
+        newCardHTML.classList.add("card");
+        newCardHTML.classList.add(card.cardType);
+        newCardHTML.value = "down";
+        newCardHTML.addEventListener("click", onCardClick);
+        boardHTML.appendChild(newCardHTML);
+    }
 }
 
 function shuffle(array) {
@@ -105,16 +118,4 @@ function shuffle(array) {
         [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
     }
     return array;
-}
-
-function setupBoard(){
-    for (const card of cards) {
-        const newCardHTML = document.createElement("input");
-        newCardHTML.type = "button";
-        newCardHTML.classList.add("card");
-        newCardHTML.classList.add(card.cardType);
-        newCardHTML.value = "down";
-        newCardHTML.addEventListener("click", onCardClick);
-        boardHTML.appendChild(newCardHTML);
-    }
 }
